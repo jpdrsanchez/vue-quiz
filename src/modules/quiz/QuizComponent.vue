@@ -1,12 +1,17 @@
 <script setup lang="ts">
 import QuizProgress from './components/QuizProgress.vue'
+import { useQuestionsService } from './questionsService'
+
+const { data, loading } = useQuestionsService()
 </script>
 
 <template>
-  <div class="quiz">
+  <div v-if="!!loading">Carregando...</div>
+  <div class="quiz" v-if="!loading && data?.length">
     <h1 class="quiz__title">Questionário</h1>
-    <QuizProgress :current-step="1" :steps="5" />
+    <QuizProgress :current-step="1" :steps="data.length" />
   </div>
+  <div v-if="!loading && !data?.length">Erro ao carregar informações</div>
 </template>
 
 <style scoped lang="scss">

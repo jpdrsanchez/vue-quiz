@@ -1,15 +1,13 @@
 <script setup lang="ts">
-import { computed, ref, type StyleValue } from 'vue'
+import { computed, type StyleValue } from 'vue'
 interface QuizProgressProps {
   steps: number
   currentStep: number
 }
 
 const props = defineProps<QuizProgressProps>()
-const currentStep = ref(props.currentStep)
-const totalSteps = ref(props.steps)
 const progressStyle = computed<StyleValue>(() => ({
-  transform: `translateX(${(100 / totalSteps.value) * currentStep.value}%)`
+  transform: `translateX(${(100 / props.steps) * props.currentStep}%)`
 }))
 </script>
 
@@ -19,7 +17,7 @@ const progressStyle = computed<StyleValue>(() => ({
       <div class="wrapper__progressbar__indicator" :style="progressStyle" />
     </div>
     <p class="wrapper__pagination">
-      Página {{ currentStep }} de {{ totalSteps }}
+      Página {{ props.currentStep }} de {{ props.steps }}
     </p>
   </div>
 </template>
